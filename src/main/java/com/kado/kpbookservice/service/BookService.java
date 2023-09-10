@@ -1,27 +1,25 @@
 package com.kado.kpbookservice.service;
 
-import com.kado.kpbookservice.dto.BookDto;
-import com.kado.kpbookservice.entity.Book;
+import com.kado.kpbookservice.domain.dto.request.BookRequestDto;
+import com.kado.kpbookservice.domain.dto.response.BookResponseDto;
+import com.kado.kpbookservice.domain.entity.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.UUID;
 
 public interface BookService {
 
-    BookDto findById(UUID id);
+    BookResponseDto findById(UUID id);
 
-    Page<BookDto> findAll(Pageable pageable, Specification<Book> spec);
+    Page<BookResponseDto> findByCategoryId(Long categoryId, Pageable pageable);
 
-    Page<BookDto> findByCategoryId(Long categoryId, Pageable pageable);
+    BookResponseDto save(BookRequestDto bookDto);
 
-    BookDto save(BookDto bookDto);
+    BookResponseDto update(BookRequestDto bookDto, UUID id);
 
-    BookDto update(BookDto bookDto);
-
-    BookDto partialUpdate(BookDto bookDto);
+    BookResponseDto partialUpdate(BookRequestDto bookDto, UUID id);
 
     Boolean delete(UUID id);
 

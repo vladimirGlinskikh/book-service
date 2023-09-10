@@ -1,4 +1,4 @@
-package com.kado.kpbookservice.entity;
+package com.kado.kpbookservice.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

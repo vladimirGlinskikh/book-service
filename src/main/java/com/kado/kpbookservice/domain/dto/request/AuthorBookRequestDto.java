@@ -1,18 +1,14 @@
-package com.kado.kpbookservice.dto;
+package com.kado.kpbookservice.domain.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import java.util.UUID;
+
 @Data
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class CategoryDto {
+public class AuthorBookRequestDto {
     @NotNull(message = "Id is required")
-    Long id;
-
-    String name;
-
-    String description;
-
-    String imageUri;
+    UUID id;
 }

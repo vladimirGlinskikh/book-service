@@ -1,7 +1,8 @@
 package com.kado.kpbookservice.controller;
 
-import com.kado.kpbookservice.dto.BookDto;
-import com.kado.kpbookservice.entity.Book;
+import com.kado.kpbookservice.domain.dto.request.BookRequestDto;
+import com.kado.kpbookservice.domain.dto.response.BookResponseDto;
+import com.kado.kpbookservice.domain.entity.Book;
 import com.kado.kpbookservice.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,29 +31,21 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("/{id}")
-    public BookDto findById(@PathVariable("id") UUID id) {
+    public BookResponseDto findById(@PathVariable("id") UUID id) {
         return bookService.findById(id);
     }
 
     @GetMapping
-    public Page<BookDto> findAll(
-            @PageableDefault(size = 4) Pageable pageable,
-            @RequestParam Map<String, String> allParams,
-            @SortDefault(sort = "title", direction = Sort.Direction.DESC) Sort sort) {
-        Specification<Book> spec = Specification.where(null);
-        if (allParams.containsKey("title")) {
-            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), "%" + allParams.get("title").toLowerCase() + "%"));
-        }
-        if (allParams.containsKey("author")) {
-            spec = spec.and((root, query, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.get("author")), "%" + allParams.get("author").toLowerCase() + "%"));
-        }
-
-        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
-        return bookService.findAll(sortedPageable, spec);
+    public Page<BookResponseDto> findByCategoryId(@RequestParam("categoryId") Long categoryId,
+                                                  @PageableDefault(size = 10, page = 0)
+                                                  @SortDefault.SortDefaults({
+                                                          @SortDefault(sort = "id", direction = Sort.Direction.DESC)
+                                                  }) Pageable pageable) {
+        return bookService.findByCategoryId(categoryId, pageable);
     }
 
     @PostMapping
-    public BookDto save(@Valid @RequestBody BookDto bookDto, Principal principal) {
+    public BookResponseDto save(@Valid @RequestBody BookRequestDto bookDto, Principal principal) {
         if (principal != null) {
             bookDto.setUserId(UUID.fromString(principal.getName()));
         } else {
@@ -62,15 +55,13 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public BookDto update(@Valid @RequestBody BookDto bookDto, @PathVariable("id") UUID id) {
-        bookDto.setId(id);
-        return bookService.update(bookDto);
+    public BookResponseDto update(@Valid @RequestBody BookRequestDto bookDto, @PathVariable("id") UUID id) {
+        return bookService.update(bookDto, id);
     }
 
     @PatchMapping("/{id}")
-    public BookDto partialUpdate(@RequestBody BookDto bookDto, @PathVariable("id") UUID id) {
-        bookDto.setId(id);
-        return bookService.partialUpdate(bookDto);
+    public BookResponseDto partialUpdate(@RequestBody BookRequestDto bookDto, @PathVariable("id") UUID id) {
+        return bookService.partialUpdate(bookDto, id);
     }
 
     @DeleteMapping("/{id}")

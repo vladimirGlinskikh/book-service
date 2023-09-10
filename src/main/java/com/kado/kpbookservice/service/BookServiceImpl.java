@@ -1,7 +1,8 @@
 package com.kado.kpbookservice.service;
 
-import com.kado.kpbookservice.dto.BookDto;
-import com.kado.kpbookservice.entity.Book;
+import com.kado.kpbookservice.domain.dto.request.BookRequestDto;
+import com.kado.kpbookservice.domain.dto.response.BookResponseDto;
+import com.kado.kpbookservice.domain.entity.Book;
 import com.kado.kpbookservice.exception.NotFoundException;
 import com.kado.kpbookservice.mapper.BookMapper;
 import com.kado.kpbookservice.repository.BookRepository;
@@ -21,42 +22,38 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
 
     @Override
-    public BookDto findById(UUID id) {
-        return bookRepository.findById(id)
-                .map(bookMapper::toDto)
-                .orElseThrow(() -> new NotFoundException(String.format("Book with id %s not found", id)));
+    public BookResponseDto findById(UUID id) {
+        return bookMapper.toDto(bookRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("Book with id %s not found", id))));
     }
 
-    @Override
-    public Page<BookDto> findAll(Pageable pageable, Specification<Book> spec) {
-        return bookRepository.findAll(spec, pageable)
-                .map(bookMapper::toDto);
-    }
 
     @Override
-    public Page<BookDto> findByCategoryId(Long categoryId, Pageable pageable) {
+    public Page<BookResponseDto> findByCategoryId(Long categoryId, Pageable pageable) {
         return bookRepository.findByCategoryId(categoryId, pageable)
                 .map(bookMapper::toDto);
     }
 
     @Override
-    public BookDto save(BookDto bookDto) {
+    public BookResponseDto save(BookRequestDto bookDto) {
         return bookMapper.toDto(bookRepository.save(bookMapper.toEntity(bookDto)));
     }
 
     @Override
-    public BookDto update(BookDto bookDto) {
-        if (!bookRepository.existsById(bookDto.getId())) {
-            throw new NotFoundException(String.format("Book with id %s not found", bookDto.getId()));
-        }
-        return bookMapper.toDto(bookRepository.save(bookMapper.toEntity(bookDto)));
+    public BookResponseDto update(BookRequestDto bookDto, UUID id) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("Book with id %s not found", id)));
+        Book entity = bookMapper.toEntity(bookDto);
+        entity.setId(book.getId());
+        return bookMapper.toDto(bookRepository.save(entity));
     }
 
     @Override
-    public BookDto partialUpdate(BookDto bookDto) {
-        Book book = bookRepository.findById(bookDto.getId())
-                .orElseThrow(() -> new NotFoundException(String.format("Book with id %s not found", bookDto.getId())));
+    public BookResponseDto partialUpdate(BookRequestDto bookDto, UUID id) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("Book with id %s not found", id)));
         bookMapper.partialUpdate(book, bookDto);
+        book.setId(id);
         return bookMapper.toDto(bookRepository.save(book));
     }
 
