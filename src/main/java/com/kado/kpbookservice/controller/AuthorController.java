@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/authors")
+@RequestMapping("/api/v1/book-authors")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthorController {
