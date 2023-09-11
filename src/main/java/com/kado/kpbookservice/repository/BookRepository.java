@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface BookRepository extends JpaRepository<Book, UUID>, JpaSpecificationExecutor<Book> {
 
     Page<Book> findByCategoryId(Long categoryId, Pageable pageable);
+
+    Page<Book> findAllByTitleLikeIgnoreCase(String name, Pageable pageable);
 }
