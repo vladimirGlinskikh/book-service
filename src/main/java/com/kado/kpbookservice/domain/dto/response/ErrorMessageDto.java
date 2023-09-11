@@ -2,7 +2,6 @@ package com.kado.kpbookservice.domain.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import org.springframework.validation.FieldError;
 
 import java.util.List;
 

@@ -3,13 +3,11 @@ package com.kado.kpbookservice.service.impl;
 import com.kado.kpbookservice.domain.dto.request.CategoryRequestDto;
 import com.kado.kpbookservice.domain.dto.response.CategoryResponseDto;
 import com.kado.kpbookservice.domain.entity.Category;
-import com.kado.kpbookservice.exception.BadRequestException;
 import com.kado.kpbookservice.exception.NotFoundException;
 import com.kado.kpbookservice.mapper.CategoryMapper;
 import com.kado.kpbookservice.repository.CategoryRepository;
 import com.kado.kpbookservice.service.CategoryService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

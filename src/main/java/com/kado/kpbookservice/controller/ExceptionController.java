@@ -54,5 +54,11 @@ public class ExceptionController {
         return ResponseEntity.status(400).body(errorMessageDto);
     }
 
-
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorMessageDto> handleException(Exception e) {
+        ErrorMessageDto errorMessageDto = new ErrorMessageDto();
+        errorMessageDto.setMessage("Internal server error");
+        errorMessageDto.setDetails(e.getMessage());
+        return ResponseEntity.status(500).body(errorMessageDto);
+    }
 }
