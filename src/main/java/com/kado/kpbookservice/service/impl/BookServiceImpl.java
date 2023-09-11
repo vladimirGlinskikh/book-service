@@ -48,6 +48,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Page<BookResponseDto> findAllByName(String name, Pageable pageable) {
+        return bookRepository.findAllByTitleLikeIgnoreCase(name, pageable)
+                .map(bookMapper::toDto);
+    }
+
+    @Override
     @Transactional
     public BookResponseDto save(BookRequestDto bookDto) {
         Book entity = bookMapper.toEntity(bookDto);

@@ -23,4 +23,5 @@ public interface BookService {
 
     Boolean delete(UUID id);
 
+    Page<BookResponseDto> findAllByName(String name, Pageable pageable);
 }

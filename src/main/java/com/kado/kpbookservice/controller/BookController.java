@@ -2,6 +2,7 @@ package com.kado.kpbookservice.controller;
 
 import com.kado.kpbookservice.domain.dto.request.BookRequestDto;
 import com.kado.kpbookservice.domain.dto.response.BookResponseDto;
+import com.kado.kpbookservice.exception.BadRequestException;
 import com.kado.kpbookservice.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +33,21 @@ public class BookController {
     }
 
     @GetMapping
-    public Page<BookResponseDto> findByCategoryId(@RequestParam("categoryId") Long categoryId,
+    public Page<BookResponseDto> findByCategoryId(@RequestParam(value = "categoryId",required = false) Long categoryId,
+                                                  @RequestParam(value = "name", required = false) String name,
                                                   @PageableDefault(size = 10, page = 0)
                                                   @SortDefault.SortDefaults({
                                                           @SortDefault(sort = "id", direction = Sort.Direction.DESC)
                                                   }) Pageable pageable) {
-        return bookService.findByCategoryId(categoryId, pageable);
+        if (name != null) {
+            name = "%" + name.trim() + "%";
+            return bookService.findAllByName(name, pageable);
+        } else if (categoryId != null) {
+            return bookService.findByCategoryId(categoryId, pageable);
+        } else {
+            // method not allowed
+            throw new BadRequestException("Please provide categoryId or name");
+        }
     }
 
     @PostMapping
