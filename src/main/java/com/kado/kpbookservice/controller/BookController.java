@@ -36,7 +36,7 @@ public class BookController {
     @GetMapping
     public Page<BookResponseDto> findByCategoryId(@RequestParam(value = "categoryId",required = false) Long categoryId,
                                                   @RequestParam(value = "name", required = false) String name,
-                                                  @PageableDefault(size = 10, page = 0)
+                                                  @PageableDefault()
                                                   @SortDefault.SortDefaults({
                                                           @SortDefault(sort = "id", direction = Sort.Direction.DESC)
                                                   }) Pageable pageable) {

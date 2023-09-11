@@ -5,7 +5,6 @@ import com.kado.kpbookservice.domain.dto.response.AuthorResponseDto;
 import com.kado.kpbookservice.service.AuthorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
