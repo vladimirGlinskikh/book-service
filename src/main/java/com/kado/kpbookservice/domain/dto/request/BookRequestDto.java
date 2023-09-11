@@ -1,9 +1,9 @@
 package com.kado.kpbookservice.domain.dto.request;
 
-import com.kado.kpbookservice.domain.dto.response.AuthorResponseDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +30,7 @@ public class BookRequestDto {
     Long countPage;
 
     @NotNull(message = "Authors is required")
+    @Size(min = 1, message = "Authors is required")
     @Valid
     List<AuthorBookRequestDto> authors = new ArrayList<>();
 
