@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
 
 @Configuration
 @EnableMethodSecurity
@@ -31,6 +34,18 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .anyRequest()
                 .permitAll();
+
+        http
+                .cors(
+                        cors -> cors
+                                .configurationSource(request -> {
+                                    CorsConfiguration corsConfiguration = new CorsConfiguration();
+                                    corsConfiguration.setAllowedOrigins(List.of("*"));
+                                    corsConfiguration.setAllowedMethods(List.of("*"));
+                                    corsConfiguration.setAllowedHeaders(List.of("*"));
+                                    return corsConfiguration.applyPermitDefaultValues();
+                                })
+                );
         return http.build();
     }
 }

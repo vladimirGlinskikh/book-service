@@ -1,10 +1,7 @@
 package com.kado.kpbookservice.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -26,5 +23,6 @@ public class Category {
     private String imageUri;
 
     @OneToMany(mappedBy = "category",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Book> books;
 }

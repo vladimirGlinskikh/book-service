@@ -14,6 +14,7 @@ import com.kado.kpbookservice.repository.BookRepository;
 import com.kado.kpbookservice.repository.CategoryRepository;
 import com.kado.kpbookservice.service.BookService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -73,7 +74,8 @@ public class BookServiceImpl implements BookService {
     private BookResponseDto getBookResponseDto(BookRequestDto bookDto, Book entity) {
         extractCategory(bookDto, entity);
         extractAuthor(bookDto, entity);
-        return bookMapper.toDto(bookRepository.save(entity));
+        Book save = bookRepository.save(entity);
+        return bookMapper.toDto(save);
     }
 
     @Override

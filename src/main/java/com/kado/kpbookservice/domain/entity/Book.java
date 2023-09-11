@@ -28,7 +28,12 @@ public class Book {
 
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "books",cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
     private List<Author> authors;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
