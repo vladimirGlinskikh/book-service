@@ -1,4 +1,4 @@
-package com.kado.kpbookservice.service;
+package com.kado.kpbookservice.service.impl;
 
 import com.kado.kpbookservice.domain.dto.request.BookRequestDto;
 import com.kado.kpbookservice.domain.dto.response.BookResponseDto;
@@ -6,6 +6,7 @@ import com.kado.kpbookservice.domain.entity.Book;
 import com.kado.kpbookservice.exception.NotFoundException;
 import com.kado.kpbookservice.mapper.BookMapper;
 import com.kado.kpbookservice.repository.BookRepository;
+import com.kado.kpbookservice.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

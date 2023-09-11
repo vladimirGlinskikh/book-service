@@ -2,23 +2,19 @@ package com.kado.kpbookservice.controller;
 
 import com.kado.kpbookservice.domain.dto.request.BookRequestDto;
 import com.kado.kpbookservice.domain.dto.response.BookResponseDto;
-import com.kado.kpbookservice.domain.entity.Book;
 import com.kado.kpbookservice.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
