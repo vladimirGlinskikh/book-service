@@ -23,7 +23,6 @@ import java.util.UUID;
 @RequestMapping("/api/v1/books")
 @RequiredArgsConstructor
 @PreAuthorize("authenticated")
-@Slf4j
 public class BookController {
 
     private final BookService bookService;
