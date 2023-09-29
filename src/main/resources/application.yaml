@@ -2,9 +2,12 @@ keycloak:
   issue-url: "keycloak-url"
 spring:
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
-    username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:postgres}
+    #    url: ${DB_URL:jdbc:postgresql://localhost:5432/postgres}
+    #    username: ${DB_USER:postgres}
+    #    password: ${DB_PASSWORD:postgres}
+    url: jdbc:postgresql://192.168.128.1:5432/postgres
+    username: admin
+    password: root
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -18,3 +21,19 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_SECRET}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+

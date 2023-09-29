@@ -9,5 +9,4 @@ public class KpBookServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(KpBookServiceApplication.class, args);
     }
-
 }
